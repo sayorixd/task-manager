@@ -187,6 +187,7 @@ def new_task(id):
 
     if request.method == 'POST':
         try:
+            assigned_to = request.form.get('assignedTo')
             TaskService.create_task({
                 'name': request.form.get('name'),
                 'description': request.form.get('description'),
@@ -195,15 +196,19 @@ def new_task(id):
                 'status': request.form.get('status'),
                 'priority': request.form.get('priority'),
                 'deadline': TaskService.parse_deadline(request.form.get('deadline')),
+                'assignedTo': assigned_to if assigned_to != '' else None
             })
             flash('Task created.', category='success')
             return redirect(url_for('project.project', id=project.id))
         except ValueError as e:
             flash(str(e), category='error')
 
+    members = TeamService.get_project_members(id)
+
     return render_template(
         'task_form.html',
         project=project,
+        members=members,
         statuses=TaskService.get_all_statuses(),
         priorities=TaskService.get_all_priorities(),
         task=None,
