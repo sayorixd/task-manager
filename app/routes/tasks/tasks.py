@@ -44,6 +44,7 @@ def tasks():
 def task(id):
     try:
         task = TaskService.get_task(id)
+        proj_id = task.projectID
         assignedTo = task.assignedTo
     except ValueError:
         flash('Task not found', category='error')
@@ -62,12 +63,12 @@ def task(id):
             data = TaskService.build_update_data(request.form)
             task = TaskService.update_task(id, data)
             flash('Task updated.', category='success')
-            return redirect(url_for('project.project', id=id))
+            return redirect(url_for('project.project', id=proj_id))
         except ValueError as e:
             flash(str(e), category='error')
-            return redirect(url_for('project.project', id=id))
+            return redirect(url_for('project.project', id=proj_id))
 
-    members = TeamService.get_project_members(id)
+    members = TeamService.get_project_members(proj_id)
 
     return render_template(
         'task.html',
