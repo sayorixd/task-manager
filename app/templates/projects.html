@@ -12,12 +12,16 @@
     <a href="{{ url_for('project.new') }}">+ Add</a>
 </div>
 
+
 {% if user_projects %}
     <div id="user_projects">
         {% for project in user_projects %}
-        <div class="project">
-            <a href="{{ url_for('project.project', id=project.id) }}">{{ project.name }}</a>
-        </div>
+        <a class="item-row" href="{{ url_for('project.project', id=project.id) }}">
+            <span class="item-id">#{{ project.id }}</span>
+            <span class="item-main">{{ project.name }}</span>
+            {# <span class="item-meta">{% if project.createdBy %}{{ project. }}</span> #}
+            <span class="item-meta">{% if project.status %}{{ project.status.name.replace('_', ' ') }}{% else %}—{% endif %}</span>
+        </a>
         {% endfor %}
     </div>
 {% else %}
@@ -29,9 +33,12 @@
 {% if participating_projects %}
     <div id="participating_projects">
         {% for project in participating_projects %}
-        <div class="project">
-            <a href="{{ url_for('project.project', id=project.id) }}">{{ project.name }}</a>
-        </div>
+        <a class="item-row" href="{{ url_for('project.project', id=project.id) }}">
+            <span class="item-id">#{{ project.id }}</span>
+            <span class="item-main">{{ project.name }}</span>
+            {# <span class="item-meta">{% if project.createdBy %}{{ project. }}</span> #}
+            <span class="item-meta">{% if project.status %}Status: {{ project.status.name.replace('_', ' ') }}{% else %}—{% endif %}</span>
+        </a>
         {% endfor %}
     </div>
 {% else %}

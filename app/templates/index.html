@@ -38,9 +38,17 @@
     <h3>My Projects</h3>
     <div class="projects-list">
         {% if projects %}
-            {% for project in projects %}
-                <a href="{{ url_for('project.project', id=project.id) }}">{{ project.name }}</a>
-            {% endfor %}
+            <div class="item-list">
+                {% for project in projects %}
+                <a class="item-row" href="{{ url_for('project.project', id=project.id) }}">
+                    <span class="item-id">#{{ project.id }}</span>
+                    <span class="item-main">{{ project.name }}</span>
+                    {# <span class="item-meta">{% if project.createdBy %}{{ project. }}</span> #}
+                    <span class="item-meta">{% if project.status %}Status: {{ project.status.name.replace('_', ' ') }}{% else %}—{% endif %}</span>
+                </a>
+                {% endfor %}
+            </div>
+            
         {% else %}
             <p>You are not part of any projects yet. Join or create a project to get started!</p>
         {% endif %}

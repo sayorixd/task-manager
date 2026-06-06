@@ -40,7 +40,7 @@ def create_app():
             return render_template('index.html')
         
         try:
-            projects = ProjectService.get_user_projects(current_user.id)
+            projects = ProjectService.get_participation_projects(current_user.id)
             tasks = TaskService.get_tasks_assigned_to_user(current_user.id)
             n = app.config['HOME_PAGE_DUE_TASKS_AMOUNT']
             tasks = TaskService.sort_tasks(tasks, 'due')[:n]

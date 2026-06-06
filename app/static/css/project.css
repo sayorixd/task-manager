@@ -18,6 +18,10 @@
     text-decoration: none;
 }
 
+.btn-edit:hover {
+    background: #e0e0e0;
+}
+
 .project-description {
     margin-bottom: 1rem;
 }
